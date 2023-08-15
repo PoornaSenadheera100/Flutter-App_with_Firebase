@@ -26,23 +26,32 @@ class _ViewUsersScreenState extends State<ViewUsersScreen> {
       ),
       body: StreamBuilder(
         stream: collectionReference,
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
-          if(snapshot.hasData){
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasData) {
             return ListView(
-              children:
-                snapshot.data!.docs.map((e) => Card(
-                  child: Column(
-                    children: [ListTile(
-                      title: Text(e["name"]),
-                    )],
-                  ),
-                )).toList(),
-
+              children: snapshot.data!.docs
+                  .map((e) => Card(
+                        child: Column(
+                          children: [
+                            ListTile(
+                              title: Text(e["name"]),
+                              trailing: IconButton(
+                                icon: const Icon(
+                                  Icons.delete,
+                                  color: Colors.red,
+                                ),
+                                onPressed: () {},
+                              ),
+                              onTap: (){},
+                            )
+                          ],
+                        ),
+                      ))
+                  .toList(),
             );
-          }else{
+          } else {
             return Text("NO DATA");
           }
-
         },
       ),
     );
