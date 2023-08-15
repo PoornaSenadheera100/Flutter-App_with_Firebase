@@ -26,4 +26,9 @@ class FirebaseCrud{
 
     return response;
   }
+
+  static Stream<QuerySnapshot> getUsers(){
+    CollectionReference notesItemCollection = _collection;
+    return notesItemCollection.snapshots();
+  }
 }
