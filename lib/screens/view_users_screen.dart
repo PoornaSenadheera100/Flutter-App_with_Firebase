@@ -14,23 +14,36 @@ class ViewUsersScreen extends StatefulWidget {
 class _ViewUsersScreenState extends State<ViewUsersScreen> {
   final Stream<QuerySnapshot> collectionReference = FirebaseCrud.getUsers();
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
   Future<void> _onTapDeleteBtn(String docId) async {
-    Response res = await FirebaseCrud.deleteUser(docId);
-    if (res.code == 200) {
-      Fluttertoast.showToast(
-          msg: "User Deleted!",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+    var dialogRes =  await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Are you sure?'),
+        content: const Text('Do you want to delete the user?'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('No'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Yes'),
+          ),
+        ],
+      ),
+    );
+    if(dialogRes == true){
+      Response res = await FirebaseCrud.deleteUser(docId);
+      if (res.code == 200) {
+        Fluttertoast.showToast(
+            msg: "User Deleted!",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
+      }
     }
   }
 
