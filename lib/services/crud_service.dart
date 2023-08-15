@@ -31,4 +31,19 @@ class FirebaseCrud{
     CollectionReference notesItemCollection = _collection;
     return notesItemCollection.snapshots();
   }
+
+  static Future<Response> deleteUser(String docId) async{
+    Response response = Response();
+    DocumentReference documentReference = _collection.doc(docId);
+
+    await documentReference.delete().whenComplete((){
+      response.code = 200;
+      response.message = "User deleted";
+    }).catchError((e){
+      response.code = 500;
+      response.message = e;
+    });
+
+    return response;
+  }
 }
