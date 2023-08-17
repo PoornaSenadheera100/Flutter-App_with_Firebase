@@ -16,7 +16,7 @@ class _ViewUsersScreenState extends State<ViewUsersScreen> {
   final Stream<QuerySnapshot> collectionReference = FirebaseCrud.getUsers();
 
   Future<void> _onTapDeleteBtn(String docId) async {
-    var dialogRes =  await showDialog<bool>(
+    var dialogRes = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Are you sure?'),
@@ -33,7 +33,7 @@ class _ViewUsersScreenState extends State<ViewUsersScreen> {
         ],
       ),
     );
-    if(dialogRes == true){
+    if (dialogRes == true) {
       Response res = await FirebaseCrud.deleteUser(docId);
       if (res.code == 200) {
         Fluttertoast.showToast(
@@ -71,12 +71,13 @@ class _ViewUsersScreenState extends State<ViewUsersScreen> {
                                   color: Colors.red,
                                 ),
                                 onPressed: () {
-                                  print(e.id);
                                   _onTapDeleteBtn(e.id);
                                 },
                               ),
                               onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context)=> UpdateUserScreen(e.id)));
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        UpdateUserScreen(e.id)));
                               },
                             )
                           ],
@@ -85,7 +86,7 @@ class _ViewUsersScreenState extends State<ViewUsersScreen> {
                   .toList(),
             );
           } else {
-            return Text("NO DATA");
+            return const Text("NO DATA");
           }
         },
       ),

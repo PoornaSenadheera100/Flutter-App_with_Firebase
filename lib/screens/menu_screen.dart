@@ -11,8 +11,8 @@ class MenuScreen extends StatelessWidget {
   }
 
   void _onTapViewUsersBtn(BuildContext context) {
-    Navigator.of(context).push(
-        MaterialPageRoute(builder: (BuildContext context) => const ViewUsersScreen()));
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (BuildContext context) => const ViewUsersScreen()));
   }
 
   @override

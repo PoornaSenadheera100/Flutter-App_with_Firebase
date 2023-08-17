@@ -5,8 +5,8 @@ final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final CollectionReference _collection = _firestore.collection("User");
 
 class FirebaseCrud {
-  static Future<Response> addUser(String name, String email, int age,
-      String phone) async {
+  static Future<Response> addUser(
+      String name, String email, int age, String phone) async {
     Response response = Response();
     DocumentReference documentReference = _collection.doc();
 
@@ -17,7 +17,7 @@ class FirebaseCrud {
       "phone": phone
     };
 
-    var result = await documentReference.set(data).whenComplete(() {
+    await documentReference.set(data).whenComplete(() {
       response.code = 200;
       response.message = "User added successfully!";
     }).catchError((e) {
@@ -48,22 +48,22 @@ class FirebaseCrud {
     return response;
   }
 
-  static Future<Response> updateUser(String docId, String name, String email,
-      int age, String phone) async {
+  static Future<Response> updateUser(
+      String docId, String name, String email, int age, String phone) async {
     Response response = Response();
     DocumentReference documentReference = _collection.doc(docId);
 
     Map<String, dynamic> data = <String, dynamic>{
       "name": name,
       "email": email,
-      "age":age,
-      "phone":phone
+      "age": age,
+      "phone": phone
     };
 
     await documentReference.update(data).whenComplete(() {
       response.code = 200;
       response.message = "User updated!";
-    }).catchError((e){
+    }).catchError((e) {
       response.code = 500;
       response.message = e;
     });
@@ -81,7 +81,7 @@ class FirebaseCrud {
     return await documentReference.get();
   }
 
-  static Future<QuerySnapshot<Object?>> getUserByEmail (String email) async{
+  static Future<QuerySnapshot<Object?>> getUserByEmail(String email) async {
     return await _collection.where("email", isEqualTo: email).get();
   }
 }

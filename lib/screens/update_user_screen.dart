@@ -49,19 +49,22 @@ class _UpdateUserScreenState extends State<UpdateUserScreen> {
     _emailController.text = data["email"];
     _ageController.text = data["age"].toString();
     _phoneController.text = data["phone"];
-    
-
   }
 
   Future<void> _onTapBottomBtn() async {
-    if(!_editModeOn){
+    if (!_editModeOn) {
       setState(() {
         _editModeOn = true;
         _bottomBtnText = "Update";
       });
-    }else{
-      Response res = await FirebaseCrud.updateUser(widget.docId, _nameController.text, _emailController.text, int.parse(_ageController.text), _phoneController.text);
-      if(res.code == 200){
+    } else {
+      Response res = await FirebaseCrud.updateUser(
+          widget.docId,
+          _nameController.text,
+          _emailController.text,
+          int.parse(_ageController.text),
+          _phoneController.text);
+      if (res.code == 200) {
         Fluttertoast.showToast(
             msg: "User Updated!",
             toastLength: Toast.LENGTH_SHORT,
@@ -69,8 +72,7 @@ class _UpdateUserScreenState extends State<UpdateUserScreen> {
             timeInSecForIosWeb: 1,
             backgroundColor: Colors.red,
             textColor: Colors.white,
-            fontSize: 16.0
-        );
+            fontSize: 16.0);
         setState(() {
           _editModeOn = false;
           _bottomBtnText = "Edit";
@@ -122,9 +124,12 @@ class _UpdateUserScreenState extends State<UpdateUserScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10.0),
-                  child: ElevatedButton(onPressed: (){
-                    _onTapBottomBtn();
-                  }, child: Text(_bottomBtnText)),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      _onTapBottomBtn();
+                    },
+                    child: Text(_bottomBtnText),
+                  ),
                 ),
               ],
             ),
