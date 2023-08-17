@@ -82,7 +82,6 @@ class FirebaseCrud {
   }
 
   static Future<QuerySnapshot<Object?>> getUserByEmail (String email) async{
-    CollectionReference collectionReference = _collection;
     return await _collection.where("email", isEqualTo: email).get();
   }
 }

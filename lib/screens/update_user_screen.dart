@@ -1,5 +1,7 @@
+import 'package:firebase_app/models/response.dart';
 import 'package:firebase_app/services/crud_service.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class UpdateUserScreen extends StatefulWidget {
   String docId;
@@ -51,18 +53,29 @@ class _UpdateUserScreenState extends State<UpdateUserScreen> {
 
   }
 
-  void _onTapBottomBtn(){
+  Future<void> _onTapBottomBtn() async {
     if(!_editModeOn){
       setState(() {
         _editModeOn = true;
         _bottomBtnText = "Update";
       });
     }else{
-
-      setState(() {
-        _editModeOn = false;
-        _bottomBtnText = "Edit";
-      });
+      Response res = await FirebaseCrud.updateUser(widget.docId, _nameController.text, _emailController.text, int.parse(_ageController.text), _phoneController.text);
+      if(res.code == 200){
+        Fluttertoast.showToast(
+            msg: "User Updated!",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0
+        );
+        setState(() {
+          _editModeOn = false;
+          _bottomBtnText = "Edit";
+        });
+      }
     }
   }
 
@@ -88,7 +101,7 @@ class _UpdateUserScreenState extends State<UpdateUserScreen> {
                 ),
                 TextFormField(
                   controller: _emailController,
-                  enabled: _editModeOn,
+                  enabled: false,
                   decoration: const InputDecoration(
                     hintText: "Email",
                   ),
