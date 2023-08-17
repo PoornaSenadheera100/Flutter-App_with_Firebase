@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_app/models/response.dart';
+import 'package:firebase_app/screens/update_user_screen.dart';
 import 'package:firebase_app/services/crud_service.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -74,7 +75,9 @@ class _ViewUsersScreenState extends State<ViewUsersScreen> {
                                   _onTapDeleteBtn(e.id);
                                 },
                               ),
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context)=> UpdateUserScreen(e.id)));
+                              },
                             )
                           ],
                         ),
