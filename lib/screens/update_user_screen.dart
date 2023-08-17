@@ -42,11 +42,14 @@ class _UpdateUserScreenState extends State<UpdateUserScreen> {
   }
 
   Future<void> getData() async {
-    var data = await FirebaseCrud.getUser(widget.docId);
+    var data = await FirebaseCrud.getUserById(widget.docId);
     _nameController.text = data["name"];
     _emailController.text = data["email"];
     _ageController.text = data["age"].toString();
     _phoneController.text = data["phone"];
+    
+    var dataTest = await FirebaseCrud.getUserByEmail("swije27@gmail.com");
+    print(dataTest.docs[0]["name"]);
   }
 
   void _onTapBottomBtn(){

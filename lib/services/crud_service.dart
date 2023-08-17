@@ -71,7 +71,7 @@ class FirebaseCrud {
     return response;
   }
 
-  static Future<DocumentSnapshot<Object?>> getUser(String docId) async {
+  static Future<DocumentSnapshot<Object?>> getUserById(String docId) async {
     DocumentReference documentReference = _collection.doc(docId);
     // var dataSnapshot;
     // await documentReference.get().then((snapshot){
@@ -81,8 +81,8 @@ class FirebaseCrud {
     return await documentReference.get();
   }
 
-  // static Stream<QuerySnapshot> getUserById (String docId) async{
-  //   CollectionReference collectionReference = _collection;
-  //   QuerySnapshot data = _collection.where("");
-  // }
+  static Future<QuerySnapshot<Object?>> getUserByEmail (String email) async{
+    CollectionReference collectionReference = _collection;
+    return await _collection.where("email", isEqualTo: email).get();
+  }
 }
