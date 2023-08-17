@@ -48,8 +48,7 @@ class _UpdateUserScreenState extends State<UpdateUserScreen> {
     _ageController.text = data["age"].toString();
     _phoneController.text = data["phone"];
     
-    var dataTest = await FirebaseCrud.getUserByEmail("swije27@gmail.com");
-    print(dataTest.docs[0]["name"]);
+
   }
 
   void _onTapBottomBtn(){

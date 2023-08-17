@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_app/models/response.dart';
 import 'package:firebase_app/services/crud_service.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +10,26 @@ class AddUserScreen extends StatelessWidget {
   late String _email;
   late int _age;
   late String _phone;
+  late QuerySnapshot<Object> _emailData;
+  String emailStatus = '';
 
   AddUserScreen({super.key});
+
+  String? _validateEmail(String text)  {
+    if(text == ''){
+      return "Field is required!";
+    }else if(_emailData.size != 0){
+      return "This email has an existing account!";
+    }
+
+    return null;
+  }
+
+  void _checkEmail(String email)  {
+    Future.delayed(Duration(seconds: 0), () async {
+      _emailData = await FirebaseCrud.getUserByEmail(email) as QuerySnapshot<Object>;
+    });
+  }
 
   String? _validateRequired(String text){
     if(text == ''){
@@ -67,8 +86,11 @@ class AddUserScreen extends StatelessWidget {
                     onSaved: (text){
                       _email = text!;
                     },
+                    onChanged: (text){
+                      _checkEmail(text);
+                    },
                     validator: (text){
-                      return _validateRequired(text!);
+                      return _validateEmail(text!);
                     },
                   ),
                   TextFormField(
